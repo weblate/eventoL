@@ -283,13 +283,6 @@ class Base(Configuration):
 
     ADMIN_TITLE = os.getenv('ADMIN_TITLE', 'EventoL')
     WS_PROTOCOL = os.getenv('PROTOCOL', 'ws')
-
-    # Change test runner
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        '--with-coverage',
-        '--cover-package=manager,eventol',
-    ]
     PRIVATE_ACTIVITIES = os.environ.get("PRIVATE_ACTIVITIES", True)
 
 
@@ -398,7 +391,6 @@ class Prod(Staging):
 
 class Dev(Base):
     INSTALLED_APPS = Base.INSTALLED_APPS + (
-        'django_nose',
         'autofixture',
         'debug_toolbar',
     )
@@ -444,4 +436,5 @@ class Dev(Base):
 
 
 class Test(Dev):
-    pass
+    WEBPACK_LOADER = Prod.WEBPACK_LOADER
+    REST_FRAMEWORK = Prod.REST_FRAMEWORK
